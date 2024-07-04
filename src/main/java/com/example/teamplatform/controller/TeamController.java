@@ -94,6 +94,9 @@ public class TeamController {
         boolean isAdmin = userService.isAdmin(request);
         // 1、查询队伍列表
         List<TeamUserVO> teamList = teamService.listTeams(teamQuery, isAdmin);
+        if (teamList.size() == 0) {
+            return ResultUtils.success(teamList);
+        }
         final List<Long> teamIdList = teamList.stream().map(TeamUserVO::getId).collect(Collectors.toList());
         // 2、判断当前用户是否已加入队伍
         QueryWrapper<UserTeam> userTeamQueryWrapper = new QueryWrapper<>();
